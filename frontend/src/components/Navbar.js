@@ -1,205 +1,399 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
   const { t } = useTranslation();
+  const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [aboutDropdown, setAboutDropdown] = useState(false);
   const [otherDropdown, setOtherDropdown] = useState(false);
+  const navbarRef = useRef(null);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setMenuOpen(false);
+    setAboutDropdown(false);
+    setOtherDropdown(false);
+  }, [location]);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+        setAboutDropdown(false);
+        setOtherDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-gradient-to-r from-amber-100/80 via-orange-100/80 to-pink-100/80 backdrop-blur shadow-md border-b border-orange-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-        {/* Logo */}
-        <div className="flex items-center space-x-4">
-          <a href="/" className="text-2xl font-extrabold text-amber-600 tracking-wider flex items-center focus:outline-none focus:ring-2 focus:ring-amber-300" style={{ fontFamily: 'Montserrat, Georgia, serif' }} aria-label="Go to homepage">
-            <span className="inline-block align-middle mr-2">
-              <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="16" cy="16" r="16" fill="#FDBA74"/>
-                <text x="16" y="22" textAnchor="middle" fontSize="18" fill="#fff" fontFamily="Montserrat, Georgia, serif">G</text>
-              </svg>
-            </span>
-            GogteKul
-          </a>
-        </div>
-        {/* Desktop Nav Links */}
-        <div className="hidden md:flex flex-1 justify-center">
-          <ul className="flex space-x-10 text-lg font-semibold text-gray-800">
-            {/* Home Button - Desktop Nav */}
-            <li>
-              <Link to="/" className="pb-1 border-b-2 border-transparent hover:border-amber-400 hover:text-amber-600 transition flex items-center gap-1 font-semibold text-gray-800" style={{ fontFamily: 'inherit' }}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-amber-600 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h3m10-11v11a1 1 0 001 1h3m-10 0h4" />
-                </svg>
-                <span>Home</span>
+    <div className="sticky top-0 z-50 w-full px-4 py-2">
+      <nav 
+        ref={navbarRef}
+        className="max-w-7xl mx-auto rounded-full transition-all duration-300 bg-amber-50/90 backdrop-blur-sm shadow-sm border border-orange-100"
+      >
+        <div className="px-6 sm:px-8 lg:px-10">
+          <div className="flex items-center justify-between h-14 lg:h-16">
+            {/* Logo */}
+            <div className="flex items-center">
+              <Link 
+                to="/" 
+                className="flex items-center space-x-3 group focus:outline-none focus:ring-2 focus:ring-amber-300 rounded-lg p-1 transition-all duration-200"
+                aria-label="Go to homepage"
+              >
+                <div className="relative">
+                  <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full shadow-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+                    <span className="text-white font-bold text-lg lg:text-xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                      G
+                    </span>
+                  </div>
+                  <div className="absolute -inset-1 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-200 blur-sm"></div>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xl lg:text-2xl font-bold text-gray-800 group-hover:text-amber-600 transition-colors duration-200" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                    GogteKul
+                  </span>
+                </div>
               </Link>
-            </li>
-            {/* About Dropdown */}
-            <li className="relative">
-              <button
-                className="pb-1 border-b-2 border-transparent hover:border-amber-400 hover:text-amber-600 transition flex items-center gap-1"
-                onClick={() => setAboutDropdown((open) => !open)}
-                aria-expanded={aboutDropdown}
-                aria-haspopup="true"
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center space-x-1">
+              <ul className="flex items-center space-x-8">
+                {/* Home */}
+                <li>
+                  <Link 
+                    to="/" 
+                    className={`relative px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2 ${
+                      isActive('/') 
+                        ? 'text-amber-600' 
+                        : 'text-gray-700 hover:text-amber-600 hover:bg-amber-50'
+                    }`}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h3m10-11v11a1 1 0 001 1h3m-10 0h4" />
+                    </svg>
+                    <span>Home</span>
+                  </Link>
+                </li>
+
+                {/* About Dropdown */}
+                <li className="relative">
+                  <button
+                    className={`relative px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2 ${
+                      aboutDropdown 
+                        ? 'text-amber-600 bg-amber-50' 
+                        : 'text-gray-700 hover:text-amber-600 hover:bg-amber-50'
+                    }`}
+                    onMouseEnter={() => setAboutDropdown(true)}
+                    onMouseLeave={() => setAboutDropdown(false)}
+                    aria-expanded={aboutDropdown}
+                    aria-haspopup="true"
+                  >
+                    <span>{t('about')}</span>
+                    <svg className={`w-4 h-4 transition-transform duration-200 ${aboutDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  
+                  {aboutDropdown && (
+                    <div 
+                      className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50"
+                      onMouseEnter={() => setAboutDropdown(true)}
+                      onMouseLeave={() => setAboutDropdown(false)}
+                    >
+                      <div className="px-2">
+                        <Link 
+                          to="/kulvruttantsamiti" 
+                          className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-all duration-200"
+                        >
+                          <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                          </svg>
+                          {t('kulvruttantSamiti')}
+                        </Link>
+                        <a 
+                          href="/GogteVaatchaal.pdf" 
+                          download 
+                          className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-all duration-200"
+                        >
+                          <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                          {t('gogteVaatchaal')}
+                        </a>
+                        <Link 
+                          to="/presidentsthoughts" 
+                          className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-all duration-200"
+                        >
+                          <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                          </svg>
+                          {t('presidentsThoughts')}
+                        </Link>
+                        <Link 
+                          to="/contact" 
+                          className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-all duration-200"
+                        >
+                          <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                          </svg>
+                          {t('contact')}
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+                </li>
+
+                {/* Kulavruksh */}
+                <li>
+                  <a 
+                    href="#kulavruksh" 
+                    className="px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-all duration-200"
+                  >
+                    {t('kulavruksh')}
+                  </a>
+                </li>
+
+                {/* Other Dropdown */}
+                <li className="relative">
+                  <button
+                    className={`relative px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2 ${
+                      otherDropdown 
+                        ? 'text-amber-600 bg-amber-50' 
+                        : 'text-gray-700 hover:text-amber-600 hover:bg-amber-50'
+                    }`}
+                    onMouseEnter={() => setOtherDropdown(true)}
+                    onMouseLeave={() => setOtherDropdown(false)}
+                    aria-expanded={otherDropdown}
+                    aria-haspopup="true"
+                  >
+                    <span>{t('other')}</span>
+                    <svg className={`w-4 h-4 transition-transform duration-200 ${otherDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  
+                  {otherDropdown && (
+                    <div 
+                      className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50"
+                      onMouseEnter={() => setOtherDropdown(true)}
+                      onMouseLeave={() => setOtherDropdown(false)}
+                    >
+                      <div className="px-2">
+                        <a 
+                          href="#granth-2006" 
+                          className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-all duration-200"
+                        >
+                          <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                          </svg>
+                          {t('granth2006')}
+                        </a>
+                        <a 
+                          href="#photo-gallery" 
+                          className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-all duration-200"
+                        >
+                          <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          {t('photoGallery')}
+                        </a>
+                        <a 
+                          href="#remembrance-day" 
+                          className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-all duration-200"
+                        >
+                          <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          {t('remembranceDay')}
+                        </a>
+                        <a 
+                          href="#news" 
+                          className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-all duration-200"
+                        >
+                          <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                          </svg>
+                          {t('news')}
+                        </a>
+                        <a 
+                          href="#events" 
+                          className="flex items-center px-4 py-3 rounded-lg text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-all duration-200"
+                        >
+                          <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          {t('events')}
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                </li>
+              </ul>
+            </div>
+
+            {/* Right Side Actions */}
+            <div className="flex items-center space-x-4">
+              <LanguageSwitcher />
+              <Link 
+                to="/login" 
+                className="hidden sm:inline-flex items-center px-6 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2"
               >
-                {t('about')}
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                </svg>
+                {t('loginRegister')}
+              </Link>
+              
+              {/* Mobile Menu Button */}
+              <button 
+                className="lg:hidden p-2 rounded-lg text-gray-600 hover:text-amber-600 hover:bg-amber-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-300"
+                onClick={() => setMenuOpen(!menuOpen)}
+                aria-label="Toggle mobile menu"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {menuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
                 </svg>
               </button>
-              {aboutDropdown && (
-                <ul
-                  className="absolute left-0 mt-2 min-w-[200px] bg-white rounded-lg shadow-lg py-2 z-50 border border-gray-200"
-                  onMouseLeave={() => setAboutDropdown(false)}
-                >
-                  <li>
-                    <Link to="/kulvruttantsamiti" className="block px-5 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-700 transition font-medium">
-  {t('kulvruttantSamiti')}
-</Link>
-                  </li>
-                  <li>
-                    <a href="/GogteVaatchaal.pdf" download className="block px-5 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-700 transition font-medium">
-  {t('gogteVaatchaal')}
-</a>
-                  </li>
-                  <li>
-                    <Link to="/presidentsthoughts" className="block px-5 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-700 transition font-medium">
-  {t('presidentsThoughts')}
-</Link>
-                  </li>
-                  <li>
-                    <Link to="/contact" className="block px-5 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-700 transition font-medium">
-  {t('contact')}
-</Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-            {/* Kulavruksh */}
-            <li>
-              <a href="#kulavruksh" className="pb-1 border-b-2 border-transparent hover:border-amber-400 hover:text-amber-600 transition">{t('kulavruksh')}</a>
-            </li>
-            {/* Other Dropdown */}
-            <li className="relative">
-              <button
-                className="pb-1 border-b-2 border-transparent hover:border-amber-400 hover:text-amber-600 transition flex items-center gap-1"
-                onClick={() => setOtherDropdown((open) => !open)}
-                aria-expanded={otherDropdown}
-                aria-haspopup="true"
-              >
-                {t('other')}
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {otherDropdown && (
-                <ul
-                  className="absolute left-0 mt-2 min-w-[200px] bg-white rounded-lg shadow-lg py-2 z-50 border border-gray-200"
-                  onMouseLeave={() => setOtherDropdown(false)}
-                >
-                  <li>
-                    <a href="#granth-2006" className="block px-5 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-700 transition font-medium">
-                      {t('granth2006')}
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#photo-gallery" className="block px-5 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-700 transition font-medium">
-                      {t('photoGallery')}
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#remembrance-day" className="block px-5 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-700 transition font-medium">
-                      {t('remembranceDay')}
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#news" className="block px-5 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-700 transition font-medium">
-                      {t('news')}
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#events" className="block px-5 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-700 transition font-medium">
-                      {t('events')}
-                    </a>
-                  </li>
-                </ul>
-              )}
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
-        {/* Right Side: Language Switcher and Login */}
-        <div className="flex items-center space-x-3">
-          <LanguageSwitcher />
-          <Link to="/login" className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded-lg font-bold shadow transition focus:outline-none focus:ring-2 focus:ring-amber-300">
-            {t('loginRegister')}
-          </Link>
-          {/* Hamburger for mobile */}
-          <button className="md:hidden ml-2 p-2 rounded focus:outline-none focus:ring-2 focus:ring-amber-300" onClick={() => setMenuOpen(!menuOpen)}>
-            <svg className="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              {menuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 8h16M4 16h16" />
-              )}
-            </svg>
-          </button>
-        </div>
-      </div>
+      </nav>
+
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden bg-gradient-to-r from-amber-100/90 via-orange-100/90 to-pink-100/90 backdrop-blur shadow-lg border-b border-orange-200">
-          <ul className="flex flex-col items-center space-y-4 py-6 text-lg font-semibold text-gray-800">
-            {/* Home Button - Mobile Nav */}
-            <li>
-              <Link to="/" className="flex items-center px-3 py-1 rounded-md hover:bg-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-300 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-amber-600 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h3m10-11v11a1 1 0 001 1h3m-10 0h4" />
+        <div className="lg:hidden bg-white border-t border-gray-200 shadow-lg rounded-b-3xl mt-2">
+          <div className="px-4 py-6 space-y-4">
+            {/* Home */}
+            <Link 
+              to="/" 
+              className={`flex items-center px-4 py-3 rounded-xl font-medium transition-all duration-200 ${
+                isActive('/') 
+                  ? 'text-amber-600 bg-amber-50' 
+                  : 'text-gray-700 hover:text-amber-600 hover:bg-amber-50'
+              }`}
+              onClick={() => setMenuOpen(false)}
+            >
+              <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h3m10-11v11a1 1 0 001 1h3m-10 0h4" />
+              </svg>
+              Home
+            </Link>
+
+            {/* About Section */}
+            <div className="space-y-2">
+              <div className="px-4 py-2 text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                {t('about')}
+              </div>
+              <Link 
+                to="/kulvruttantsamiti" 
+                className="flex items-center px-4 py-3 rounded-xl text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-all duration-200"
+                onClick={() => setMenuOpen(false)}
+              >
+                <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
-                <span className="font-semibold text-amber-700">Home</span>
+                {t('kulvruttantSamiti')}
               </Link>
-            </li>
-            {/* About Dropdown (Mobile) */}
-            <li>
-              <details>
-                <summary className="block w-full text-center py-2 hover:text-amber-600 transition cursor-pointer">{t('about')}</summary>
-                <ul className="pl-4">
-                  <li>
-                    <a href="#about1" className="block py-2 hover:text-amber-600 transition" onClick={() => setMenuOpen(false)}>{t('about1') || 'About Us'}</a>
-                  </li>
-                  <li>
-                    <a href="#about2" className="block py-2 hover:text-amber-600 transition" onClick={() => setMenuOpen(false)}>{t('about2') || 'Our History'}</a>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            {/* Kulavruksh */}
-            <li>
-              <a href="#kulavruksh" className="block w-full text-center py-2 hover:text-amber-600 transition" onClick={() => setMenuOpen(false)}>{t('kulavruksh')}</a>
-            </li>
-            {/* Other Dropdown (Mobile) */}
-            <li>
-              <details>
-                <summary className="block w-full text-center py-2 hover:text-amber-600 transition cursor-pointer">{t('other')}</summary>
-                <ul className="pl-4">
-                  <li>
-                    <a href="#other1" className="block py-2 hover:text-amber-600 transition" onClick={() => setMenuOpen(false)}>{t('other1') || 'Gallery'}</a>
-                  </li>
-                  <li>
-                    <a href="#other2" className="block py-2 hover:text-amber-600 transition" onClick={() => setMenuOpen(false)}>{t('other2') || 'Contact'}</a>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            {/* Login/Register */}
-            <li>
-              <a href="#login" className="block w-full text-center py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-bold shadow mt-2" onClick={() => setMenuOpen(false)}>{t('loginRegister')}</a>
-            </li>
-          </ul>
+              <a 
+                href="/GogteVaatchaal.pdf" 
+                download 
+                className="flex items-center px-4 py-3 rounded-xl text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-all duration-200"
+                onClick={() => setMenuOpen(false)}
+              >
+                <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                {t('gogteVaatchaal')}
+              </a>
+              <Link 
+                to="/presidentsthoughts" 
+                className="flex items-center px-4 py-3 rounded-xl text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-all duration-200"
+                onClick={() => setMenuOpen(false)}
+              >
+                <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                {t('presidentsThoughts')}
+              </Link>
+              <Link 
+                to="/contact" 
+                className="flex items-center px-4 py-3 rounded-xl text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-all duration-200"
+                onClick={() => setMenuOpen(false)}
+              >
+                <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                {t('contact')}
+              </Link>
+            </div>
+
+            {/* Other Section */}
+            <div className="space-y-2">
+              <div className="px-4 py-2 text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                {t('other')}
+              </div>
+              <a 
+                href="#kulavruksh" 
+                className="flex items-center px-4 py-3 rounded-xl text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-all duration-200"
+                onClick={() => setMenuOpen(false)}
+              >
+                <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                {t('kulavruksh')}
+              </a>
+              <a 
+                href="#granth-2006" 
+                className="flex items-center px-4 py-3 rounded-xl text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-all duration-200"
+                onClick={() => setMenuOpen(false)}
+              >
+                <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                {t('granth2006')}
+              </a>
+              <a 
+                href="#photo-gallery" 
+                className="flex items-center px-4 py-3 rounded-xl text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-all duration-200"
+                onClick={() => setMenuOpen(false)}
+              >
+                <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                {t('photoGallery')}
+              </a>
+            </div>
+
+            {/* Login Button for Mobile */}
+            <div className="pt-4">
+              <Link 
+                to="/login" 
+                className="flex items-center justify-center w-full px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
+                onClick={() => setMenuOpen(false)}
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                </svg>
+                {t('loginRegister')}
+              </Link>
+            </div>
+          </div>
         </div>
       )}
-    </nav>
+    </div>
   );
 };
 

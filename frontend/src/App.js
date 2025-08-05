@@ -54,7 +54,18 @@ function AppRoutesWithLoader() {
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div 
+      className="min-h-screen"
+      style={{
+        backgroundImage: "url('/background.jpg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center top',
+        backgroundAttachment: 'fixed'
+      }}
+    >
+      {/* Background Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/80 z-0"></div>
+      
       <Router>
         <Navbar />
         <AppRoutesWithLoader />

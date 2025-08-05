@@ -7,23 +7,11 @@ const LoginRegisterPage = () => {
   const hoverText = `परशुराम हा जमदग्नी आणि रेणुकेचा मुलगा होता. जमदग्नी ब्राह्मण होता तर रेणुका क्षत्रिय अर्थात योद्धा कुळातील होती. परशुराम हा शिवाचा महान उपासक होता. शस्त्रविद्येत पारंगत असलेला परशुराम गुरु द्रोणाचार्य, कर्ण आणि अर्जुन या महापुरुषांचा तो शिक्षक होता असे मानले जाते. त्याने चित्पावन ब्राह्मण नावाच्या एका लहान समुदायाची चौदा गोत्र निर्माण केली. परशुरामाने चित्पावन ब्राह्मणांना वेद, युद्धनीती आणि युद्ध कला शिकवली. चित्पावन ब्राह्मण परशुरामांना "आदिपुरुष" किंवा मूळ पुरुष म्हणून संबोधतात.`;
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-b from-amber-50 to-orange-100">
+    <div className="flex flex-col min-h-screen">
       {/* Google Fonts Import */}
       <link href="https://fonts.googleapis.com/css2?family=Amita:wght@700&display=swap" rel="stylesheet" />
       {/* Hero Section */}
-      <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image with Overlay */}
-        <div 
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: "url('/background.jpg')",
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            filter: 'brightness(0.9)'
-          }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/80"></div>
-        </div>
+      <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden z-10">
         {/* Main Content (title, subtitle, Parashurama image, and login/register form in one row) */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-start justify-between py-20 w-full">
@@ -48,7 +36,7 @@ const LoginRegisterPage = () => {
                     style={{ pointerEvents: 'none' }}>
                     <span
                       className="text-white text-base md:text-lg font-semibold text-center leading-relaxed"
-                      style={{ fontFamily: 'Amita, serif', textShadow: '0 2px 8px #000' }}
+                      style={{ fontFamily: 'Gotu, serif', textShadow: '0 2px 8px #000' }}
                     >
                       {hoverText}
                     </span>
@@ -68,7 +56,6 @@ const LoginRegisterPage = () => {
                 </p>
               </div>
             </div>
-            {/* Login/Register Form (right-aligned) */}
             <div className="w-full lg:w-auto flex justify-center lg:justify-end mt-12 lg:mt-0 lg:ml-auto lg:mr-[-60px] lg:pr-0">
               <div className="bg-white/90 rounded-2xl shadow-lg p-8 w-full max-w-md flex flex-col items-center">
                 <h1 className="text-3xl md:text-4xl font-extrabold text-amber-700 mb-6" style={{ fontFamily: 'Amita, cursive' }}>Login / Register</h1>
