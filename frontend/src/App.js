@@ -8,6 +8,7 @@ import KulvruttantSamitiPage from './pages/KulvruttantSamitiPage';
 import PresidentsThoughtsPage from './pages/PresidentsThoughtsPage';
 import ContactPage from './pages/ContactPage';
 import LoginRegisterPage from './pages/LoginRegisterPage';
+import AarthiPage from './pages/AarthiPage';
 import LoadingSpinner from './components/LoadingSpinner';
 console.log("React version at runtime:", React.version);
 
@@ -46,6 +47,7 @@ function AppRoutesWithLoader() {
           <Route path="/presidentsthoughts" element={<PresidentsThoughtsPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/login" element={<LoginRegisterPage />} />
+          <Route path="/aarthi" element={<AarthiPage />} />
         </Routes>
       </div>
     </div>

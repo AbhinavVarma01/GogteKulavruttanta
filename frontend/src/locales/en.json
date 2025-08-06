@@ -4,6 +4,16 @@
   "kulavruksh": "Kulavruksh",
   "other": "Other",
   "loginRegister": "Login / Register",
+  "photoscroller": {
+    "features_description": "Discover the key features of our website",
+    "granth": "Granth",
+    "kulvruttantant_samiti": "Kulvruttant Samiti",
+    "news_events": "News & Events",
+    "photogallery": "Photo Gallery",
+    "presidents_thoughts": "President's Thoughts",
+    "remembrance_day": "Remembrance Day",
+    "vaatchaal": "Vaatchaal"
+  },
   "homepage": {
     "title": "गोगटे कुलवृत्तांत",
     "subtitle": "Discover the rich heritage and spiritual journey of the Gogte Family",

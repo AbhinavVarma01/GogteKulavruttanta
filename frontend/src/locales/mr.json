@@ -4,6 +4,16 @@
   "kulavruksh": "कुळवृक्ष",
   "other": "इतर",
   "loginRegister": "लॉगिन / नोंदणी",
+  "photoscroller": {
+    "features_description": "आमच्या वेबसाइटच्या मुख्य वैशिष्ट्यांचा शोध घ्या",
+    "granth": "ग्रंथ",
+    "kulvruttantant_samiti": "कुलवृत्तांत समिती",
+    "news_events": "बातम्या/कार्यक्रम",
+    "photogallery": "छायाचित्र संग्रह",
+    "presidents_thoughts": "अध्यक्षांचे विचार",
+    "remembrance_day": "स्मरण दिन",
+    "vaatchaal": "वाच्चाल"
+  },
   "homepage": {
     "title": "गोगटे कुलवृत्तांत",
     "subtitle": "गोगटे कुटुंबाच्या समृद्ध वारशाचा आणि आध्यात्मिक प्रवासाचा शोध घ्या",
