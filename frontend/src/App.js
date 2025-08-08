@@ -9,6 +9,7 @@ import PresidentsThoughtsPage from './pages/PresidentsThoughtsPage';
 import ContactPage from './pages/ContactPage';
 import LoginRegisterPage from './pages/LoginRegisterPage';
 import AarthiPage from './pages/AarthiPage';
+import MantrapcharPage from './pages/MantrapcharPage';
 import LoadingSpinner from './components/LoadingSpinner';
 console.log("React version at runtime:", React.version);
 
@@ -48,6 +49,7 @@ function AppRoutesWithLoader() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/login" element={<LoginRegisterPage />} />
           <Route path="/aarthi" element={<AarthiPage />} />
+          <Route path="/mantrapchar" element={<MantrapcharPage />} />
         </Routes>
       </div>
     </div>
@@ -66,7 +68,7 @@ function App() {
       }}
     >
       {/* Background Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/80 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/40 z-0"></div>
       
       <Router>
         <Navbar />

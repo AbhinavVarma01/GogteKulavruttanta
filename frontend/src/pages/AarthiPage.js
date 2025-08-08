@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 const AarthiPage = () => {
-  const { t } = useTranslation();
   const [showVideo1, setShowVideo1] = useState(false);
   const [showVideo2, setShowVideo2] = useState(false);
   const [selectedDeity, setSelectedDeity] = useState(null);
@@ -182,7 +180,7 @@ const AarthiPage = () => {
             <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
               <iframe
                 className="absolute top-0 left-0 w-full h-full rounded-lg"
-                src={`https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1`}
+                src={`https://www.youtube.com/embed/dVTUUtOHUCA?autoplay=1`}
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

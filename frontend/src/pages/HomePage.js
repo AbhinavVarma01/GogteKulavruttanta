@@ -33,7 +33,7 @@ const HomePage = () => {
               { to: "/vyadeshwar", img: "/Vyadeshwar_swamy.jpg", title: t('homepage.grid.vyadeshwar') },
               { to: "/yogeshwaridevi", img: "/Yogeshwari_devi.jpg", title: t('homepage.grid.yogeshwari') },
               { to: "/aarthi", img: "/aarthi.jpg", title: t('homepage.grid.aarthi') },
-              { img: "/Mantropchar.jpg", title: t('homepage.grid.mantrapchar') }
+              { to: "/mantrapchar", img: "/Mantropchar.jpg", title: t('homepage.grid.mantrapchar') }
             ].map((item, index) => (
               <Link
                 key={index}
@@ -59,7 +59,7 @@ const HomePage = () => {
               { to: "/vyadeshwar", img: "/Vyadeshwar_swamy.jpg", title: t('homepage.grid.vyadeshwar') },
               { to: "/yogeshwaridevi", img: "/Yogeshwari_devi.jpg", title: t('homepage.grid.yogeshwari') },
               { to: "/aarthi", img: "/aarthi.jpg", title: t('homepage.grid.aarthi') },
-              { img: "/Mantropchar.jpg", title: t('homepage.grid.mantrapchar') }
+              { to: "/mantrapchar", img: "/Mantropchar.jpg", title: t('homepage.grid.mantrapchar') }
             ].map((item, index) => (
               <Link
                 key={index}
@@ -81,7 +81,7 @@ const HomePage = () => {
 
         {/* Main Content */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center justify-between py-20">
+          <div className="flex flex-col lg:flex-row items-center justify-between -mt-12">
             <div className="lg:w-1/2 flex flex-row items-center gap-12">
               <div
                 className="flex-shrink-0 -ml-2 md:ml-4 relative inline-block"
@@ -95,7 +95,7 @@ const HomePage = () => {
                 <img
                   src="/parashurama.jpg"
                   alt="Parashurama"
-                  className="h-[450px] w-auto rounded-xl object-contain shadow-xl border-4 border-white"
+                  className="h-[450px] w-auto rounded-xl object-contain shadow-xl border border-white"
                 />
                 {showText && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black/70 rounded-xl p-6 transition-opacity duration-300 opacity-100"
@@ -179,7 +179,7 @@ const HomePage = () => {
             <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
               <iframe
                 className="absolute top-0 left-0 w-full h-full rounded-lg"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+                src="https://www.youtube.com/embed/BeqKkGYCWPk?autoplay=1"
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

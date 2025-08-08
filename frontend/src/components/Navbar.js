@@ -33,6 +33,22 @@ const Navbar = () => {
 
   const isActive = (path) => location.pathname === path;
 
+  const handleAboutMouseEnter = () => {
+    setAboutDropdown(true);
+  };
+
+  const handleAboutMouseLeave = () => {
+    setAboutDropdown(false);
+  };
+
+  const handleOtherMouseEnter = () => {
+    setOtherDropdown(true);
+  };
+
+  const handleOtherMouseLeave = () => {
+    setOtherDropdown(false);
+  };
+
   return (
     <div className="sticky top-0 z-50 w-full px-4 py-2">
       <nav 
@@ -45,17 +61,14 @@ const Navbar = () => {
             <div className="flex items-center">
               <Link 
                 to="/" 
-                className="flex items-center space-x-3 group focus:outline-none focus:ring-2 focus:ring-amber-300 rounded-lg p-1 transition-all duration-200"
+                className="flex items-center space-x-3 group focus:outline-none rounded-lg p-1 transition-all duration-200"
                 aria-label="Go to homepage"
               >
-                <div className="relative">
-                  <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full shadow-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
-                    <span className="text-white font-bold text-lg lg:text-xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                      G
-                    </span>
-                  </div>
-                  <div className="absolute -inset-1 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-200 blur-sm"></div>
-                </div>
+                <img 
+                  src="/logo1.png" 
+                  alt="GogteKul Logo" 
+                  className="w-14 h-14 lg:w-20 lg:h-20 group-hover:scale-105 transition-transform duration-200"
+                />
                 <div className="flex flex-col">
                   <span className="text-xl lg:text-2xl font-bold text-gray-800 group-hover:text-amber-600 transition-colors duration-200" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     GogteKul
@@ -92,8 +105,8 @@ const Navbar = () => {
                         ? 'text-amber-600 bg-amber-50' 
                         : 'text-gray-700 hover:text-amber-600 hover:bg-amber-50'
                     }`}
-                    onMouseEnter={() => setAboutDropdown(true)}
-                    onMouseLeave={() => setAboutDropdown(false)}
+                    onMouseEnter={handleAboutMouseEnter}
+                    onMouseLeave={handleAboutMouseLeave}
                     aria-expanded={aboutDropdown}
                     aria-haspopup="true"
                   >
@@ -105,9 +118,9 @@ const Navbar = () => {
                   
                   {aboutDropdown && (
                     <div 
-                      className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50"
-                      onMouseEnter={() => setAboutDropdown(true)}
-                      onMouseLeave={() => setAboutDropdown(false)}
+                      className="absolute top-full left-0 mt-0 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50"
+                      onMouseEnter={handleAboutMouseEnter}
+                      onMouseLeave={handleAboutMouseLeave}
                     >
                       <div className="px-2">
                         <Link 
@@ -170,8 +183,8 @@ const Navbar = () => {
                         ? 'text-amber-600 bg-amber-50' 
                         : 'text-gray-700 hover:text-amber-600 hover:bg-amber-50'
                     }`}
-                    onMouseEnter={() => setOtherDropdown(true)}
-                    onMouseLeave={() => setOtherDropdown(false)}
+                    onMouseEnter={handleOtherMouseEnter}
+                    onMouseLeave={handleOtherMouseLeave}
                     aria-expanded={otherDropdown}
                     aria-haspopup="true"
                   >
@@ -183,9 +196,9 @@ const Navbar = () => {
                   
                   {otherDropdown && (
                     <div 
-                      className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50"
-                      onMouseEnter={() => setOtherDropdown(true)}
-                      onMouseLeave={() => setOtherDropdown(false)}
+                      className="absolute top-full left-0 mt-0 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50"
+                      onMouseEnter={handleOtherMouseEnter}
+                      onMouseLeave={handleOtherMouseLeave}
                     >
                       <div className="px-2">
                         <a 

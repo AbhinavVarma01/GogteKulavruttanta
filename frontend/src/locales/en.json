@@ -5,7 +5,7 @@
   "other": "Other",
   "loginRegister": "Login / Register",
   "photoscroller": {
-    "features_description": "Discover the key features of our website",
+    "features_description": "Features available in our website",
     "granth": "Granth",
     "kulvruttantant_samiti": "Kulvruttant Samiti",
     "news_events": "News & Events",
@@ -25,8 +25,8 @@
     },
     "mission": {
       "title": "Mission",
-      "subtitle": "Know the mission of Gogte Kulavruttant Committee and get inspired!",
-      "description": "Our family's mission is to preserve and promote our rich cultural heritage, strengthen family bonds, and pass down our traditions to future generations.",
+      "subtitle": "Discover the mission and vision of the Gogte Kulavruttant Committee",
+      "description": "Our mission is to preserve and promote our rich cultural heritage, strengthen family bonds, and ensure our traditions are passed down to future generations with pride and reverence.",
       "button": "Mission"
     },
     "familyTree": {
