@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import SkipToContent from './components/SkipToContent';
+import AccessibilityToolbar from './components/AccessibilityToolbar';
+import AccessibilityNotification from './components/AccessibilityNotification';
+import KeyboardShortcuts from './components/KeyboardShortcuts';
+import { AccessibilityProvider } from './contexts/AccessibilityContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 import HomePageWithFooter from './pages/HomePage';
 import VyadeshwarPage from './pages/VyadeshwarPage';
 import YogeshwariDeviPage from './pages/YogeshwariDeviPage';
@@ -70,10 +76,20 @@ function App() {
       {/* Background Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/40 z-0"></div>
       
-      <Router>
-        <Navbar />
-        <AppRoutesWithLoader />
-      </Router>
+      <AccessibilityProvider>
+        <LanguageProvider>
+          <Router>
+            <SkipToContent />
+            <Navbar />
+            <main id="main-content">
+              <AppRoutesWithLoader />
+            </main>
+            <KeyboardShortcuts />
+            <AccessibilityNotification />
+            <AccessibilityToolbar />
+          </Router>
+        </LanguageProvider>
+      </AccessibilityProvider>
     </div>
   );
 }

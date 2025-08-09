@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Accessibility helpers */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #111827; /* gray-900 */
+  color: white;
+  padding: 8px 12px;
+  z-index: 1000;
+  border-radius: 0 0 8px 0;
+}
+.skip-to-content:focus {
+  top: 0;
+}
+
+.high-contrast {
+  filter: contrast(1.4) saturate(1.2);
+}
+
 @keyframes spin-slow {
   100% {
     transform: rotate(360deg);

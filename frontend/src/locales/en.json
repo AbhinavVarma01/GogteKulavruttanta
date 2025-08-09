@@ -81,4 +81,16 @@
   "remembranceDay": "Remembrance Day",
   "news": "News",
   "events": "Events"
+  ,
+  "accessibility": {
+    "toolbar": "Accessibility",
+    "fontSize": "Font Size",
+    "lineSpacing": "Line Spacing",
+    "resetToDefault": "Reset to Default",
+    "skipToContent": "Skip to content",
+    "voiceCommands": "Voice Commands",
+    "voiceCommandsHelp": "Available voice commands",
+    "listening": "listening",
+    "highContrast": "High Contrast"
+  }
 }

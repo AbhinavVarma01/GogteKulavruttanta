@@ -81,4 +81,16 @@
   "remembranceDay": "स्मरण दिन",
   "news": "बातम्या",
   "events": "कार्यक्रम"
+  ,
+  "accessibility": {
+    "toolbar": "प्रवेशयोग्यता",
+    "fontSize": "अक्षर आकार",
+    "lineSpacing": "ओळीतील अंतर",
+    "resetToDefault": "मूळ सेटिंग्ज",
+    "skipToContent": "मूळ मजकुराकडे जा",
+    "voiceCommands": "व्हॉइस कमांड्स",
+    "voiceCommandsHelp": "उपलब्ध व्हॉइस कमांड्स",
+    "listening": "ऐकले जात आहे",
+    "highContrast": "उच्च कॉन्ट्रास्ट"
+  }
 }
